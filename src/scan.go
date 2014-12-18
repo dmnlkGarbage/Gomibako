@@ -1,10 +1,12 @@
 package main
 
-	import (
-		"fmt"
-	)
+import (
 
-func  main() {
-	fmt.Println("aaaaa")
+)
+
+type App struct {
+	appId int
+	appName string
 }
+
 
