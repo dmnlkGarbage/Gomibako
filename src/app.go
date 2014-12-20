@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+
 )
 
 type App struct {
@@ -9,8 +9,3 @@ type App struct {
 	appName string
 }
 
-// override的なことは出来ない？
-func (a App) changeAppId(id int) {
-	a.appId = id
-	fmt.Println(a.appId)
-}
