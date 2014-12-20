@@ -1,11 +1,8 @@
 package main
 
-import (
-
-)
+import ()
 
 type App struct {
-	appId int
+	appId   int
 	appName string
 }
-
