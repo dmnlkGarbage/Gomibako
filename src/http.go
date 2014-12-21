@@ -1,15 +1,14 @@
 package main
 
 import (
-	"net/url"
-	"net/http"
 	"fmt"
-	"io/ioutil"
 	"github.com/k0kubun/pp"
+	"io/ioutil"
+	"net/http"
+	"net/url"
 )
 
 var URL = "http://api.atnd.org/events/"
-
 
 func main() {
 
@@ -37,15 +36,12 @@ func main() {
 	// バイト配列を文字列にして表示する
 	pp.Print(string(val))
 
-
-
 	// httpClient使ってみる
 	req, nil := http.NewRequest("GET", URL, nil)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-
 	client := new(http.Client)
 	resp1, err := client.Do(req)
 	if err != nil {
