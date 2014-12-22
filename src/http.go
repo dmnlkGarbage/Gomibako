@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/k0kubun/pp"
 	"io/ioutil"
@@ -33,6 +34,7 @@ func main() {
 
 	// ioutil.readallでバイト配列にする
 	val, err := ioutil.ReadAll(resp.Body)
+
 	// バイト配列を文字列にして表示する
 	pp.Print(string(val))
 
