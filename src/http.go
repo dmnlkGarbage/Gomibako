@@ -51,8 +51,7 @@ func main() {
 	}
 	defer resp1.Body.Close()
 	fmt.Println(resp1)
-	// 取れる中身全然違うっぽい？
 	val1, err := ioutil.ReadAll(resp1.Body)
-	pp.Print(val1)
+	pp.Print(string(val1))
 
 }
