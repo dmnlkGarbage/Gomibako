@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"os"
+	"github.com/k0kubun/pp"
 )
 
 type  Message struct {
@@ -12,6 +13,8 @@ type  Message struct {
 	Data string
 }
 func main() {
+
+	//エンコーディング試す
 	//構造体つくる
 	message := Message{2, "data"}
 	// エンコーディング。バイト列
@@ -23,5 +26,18 @@ func main() {
 	}
 	//標準出力に出してみる
 	os.Stdout.Write(json)
+
+
+	//デコードしてみる
+	var decodeJson Message
+	// json.Unmarshal undefined (type []byte has no field or method Unmarshal)
+	json.Unmarshal(json, &decodeJson)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	//print
+	pp.Print(decodeJson)
 }
 
