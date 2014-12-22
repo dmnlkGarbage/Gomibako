@@ -18,20 +18,20 @@ func main() {
 	//構造体つくる
 	message := Message{2, "data"}
 	// エンコーディング。バイト列
-	json, err := json.Marshal(message)
+	enc, err := json.Marshal(message)
 
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 	//標準出力に出してみる
-	os.Stdout.Write(json)
+	os.Stdout.Write(enc)
 
 
 	//デコードしてみる
 	var decodeJson Message
-	// json.Unmarshal undefined (type []byte has no field or method Unmarshal)
-	json.Unmarshal(json, &decodeJson)
+	// jsonとかいう変数が悪い
+	json.Unmarshal(enc, &decodeJson)
 
 	if err != nil {
 		fmt.Println(err)
