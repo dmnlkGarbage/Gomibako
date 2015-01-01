@@ -1,27 +1,30 @@
 package main
 
 import (
-	"github.com/mrjones/oauth"
+	"bufio"
+	"encoding/json"
+	"flag"
 	"fmt"
 	"io/ioutil"
-	"encoding/json"
+
 	"github.com/k0kubun/pp"
-	"flag"
+	"github.com/mrjones/oauth"
 )
 
 //OauthClient
 type Client struct {
-	consumer *oauth.Consumer
+	consumer    *oauth.Consumer
 	accessToken *oauth.AccessToken
 }
 
 func main() {
 	client := initialize()
-	result, err := client.Get("https://api.twitter.com/1.1/statuses/home_timeline.json", nil)
-	if err != nil {
-		fmt.Println(err)
-	}
-	pp.Print(result)
+	//	result, err := client.Get("https://userstream.twitter.com/1.1/user.json", nil)
+	//	if err != nil {
+	//		fmt.Println(err)
+	//	}
+	//	pp.Print(result)
+	client.GetStream("https://userstream.twitter.com/1.1/user.json", nil)
 }
 
 // client初期化
@@ -55,15 +58,14 @@ func initialize() *Client {
 	fmt.Println(*accessToken)
 	fmt.Println(*accessTokenSecret)
 
-
 	//初期化
 	client := new(Client)
 	//oauthパッケージでtwitterにconsumerkeyを元に取得
 	client.consumer = oauth.NewConsumer(*consumerKey, *consumerSecret, oauth.ServiceProvider{
-			RequestTokenUrl:   "http://api.twitter.com/oauth/request_token",
-			AuthorizeTokenUrl: "https://api.twitter.com/oauth/authorize",
-			AccessTokenUrl:    "https://api.twitter.com/oauth/access_token",
-		})
+		RequestTokenUrl:   "http://api.twitter.com/oauth/request_token",
+		AuthorizeTokenUrl: "https://api.twitter.com/oauth/authorize",
+		AccessTokenUrl:    "https://api.twitter.com/oauth/access_token",
+	})
 	//accessTokenを渡す。
 	//ユーザーに認証させることもできるが面倒なので
 	client.accessToken = &oauth.AccessToken{*accessToken, *accessTokenSecret, nil}
@@ -71,7 +73,7 @@ func initialize() *Client {
 }
 
 // clientを使ってTwitterからデータ取得する
-func (client *Client) Get(url string, params map[string]string) (interface {}, error) {
+func (client *Client) Get(url string, params map[string]string) (interface{}, error) {
 	//Twitterにget
 	response, err := client.consumer.Get(url, params, client.accessToken)
 	if err != nil {
@@ -93,3 +95,27 @@ func (client *Client) Get(url string, params map[string]string) (interface {}, e
 	return result, err
 }
 
+func (client *Client) GetStream(url string, params map[string]string) {
+	response, err := client.consumer.Get(url, params, client.accessToken)
+	if err != nil {
+		return
+	}
+	fmt.Println("get")
+	//defer response.Body.Close()
+	scanner := bufio.NewScanner(response.Body)
+	for {
+		fmt.Println("into forloop")
+		if ok := scanner.Scan(); !ok {
+			fmt.Println("scan error")
+			continue
+		}
+		var result interface{}
+		pp.Print(result)
+		if err := json.Unmarshal(scanner.Bytes(), &result); err != nil {
+			fmt.Println(err)
+			fmt.Errorf("error")
+			continue
+		}
+		pp.Print(result)
+	}
+}
