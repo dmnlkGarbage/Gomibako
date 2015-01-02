@@ -17,6 +17,10 @@ type Client struct {
 	accessToken *oauth.AccessToken
 }
 
+const (
+	STREAM_URL = "https://userstream.twitter.com/1.1/user.json"
+)
+
 func main() {
 	client := initialize()
 	//	result, err := client.Get("https://userstream.twitter.com/1.1/user.json", nil)
@@ -24,7 +28,8 @@ func main() {
 	//		fmt.Println(err)
 	//	}
 	//	pp.Print(result)
-	client.GetStream("https://userstream.twitter.com/1.1/user.json", nil)
+
+	client.GetStream(STREAM_URL, nil)
 }
 
 // client初期化
@@ -96,26 +101,33 @@ func (client *Client) Get(url string, params map[string]string) (interface{}, er
 }
 
 func (client *Client) GetStream(url string, params map[string]string) {
+	//userStreamAPI叩く
 	response, err := client.consumer.Get(url, params, client.accessToken)
 	if err != nil {
 		return
 	}
 	fmt.Println("get")
 	//defer response.Body.Close()
+	//レスポンスのbodyをscannerで読み込む
 	scanner := bufio.NewScanner(response.Body)
 	for {
 		fmt.Println("into forloop")
+		//都度scanして新しく受信してたら
 		if ok := scanner.Scan(); !ok {
 			fmt.Println("scan error")
 			continue
 		}
 		var result interface{}
-		pp.Print(result)
+		//json化
 		if err := json.Unmarshal(scanner.Bytes(), &result); err != nil {
 			fmt.Println(err)
-			fmt.Errorf("error")
+			fmt.Println(scanner.Bytes())
 			continue
 		}
+		//		decoder := json.NewDecoder(scanner.Bytes());
+		//		if err := decoder.Decode(&result); err!= nil {
+		//			fmt.Println(err)
+		//		}
 		pp.Print(result)
 	}
 }
