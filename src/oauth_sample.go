@@ -128,6 +128,11 @@ func (client *Client) GetStream(url string, params map[string]string) {
 		//		if err := decoder.Decode(&result); err!= nil {
 		//			fmt.Println(err)
 		//		}
-		pp.Print(result)
+		//pp.Print(result)
+		msg := result.(map[string]interface{})
+		if val, ok := msg["event"]; ok {
+			pp.Print(val)
+		}
+
 	}
 }
