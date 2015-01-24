@@ -3,28 +3,41 @@ package main
 import "fmt"
 
 // sturct
-type User struct {
-	Age int64
-	Name string
+type UrlParam struct {
+	Keyword string
+	Format string
 }
 
-func NewUser (name string) * User {
-	u := new(User)
-	u.Name = name
-	u.Age = 1000
+func NewParam (keyword string) *UrlParam {
+	u := new(UrlParam)
+	u.Format = "json"
+	u.Keyword = keyword
 	return u
 }
 
-func main() {
-	// コンストラクタ
-	user := User{0, "a"}
-	fmt.Println(user)
-	// 代入
-	user.Age = 10
-	fmt.Println(user)
+func NewParam2 (keyword string) *UrlParam {
+	return &UrlParam{keyword, "json"}
+}
 
-	u := NewUser("dmnlk")
-	fmt.Println(u)
+func makeParam(keyword string) UrlParam {
+	return UrlParam{keyword, "json"}
+}
+
+func main() {
+	param := UrlParam{}
+	param.Keyword = "golang"
+	param.Format = "json"
+	fmt.Println(param)
+
+	p1 := NewParam("golang")
+	fmt.Println(p1)
+
+	p2 := NewParam2("golang")
+	fmt.Println(p2)
+
+	p3 := makeParam("golang")
+	fmt.Println(p3)
+
 }
 
 
