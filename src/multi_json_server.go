@@ -3,18 +3,23 @@ package main
 import (
 	"net/http"
 	"time"
+	"fmt"
 )
 
+
 func main() {
-	http.HandleFunc("/", streaming)
+	http.HandleFunc("/", helloStreaming)
 	http.ListenAndServe(":8000", nil)
 }
 
-func streaming(w http.ResponseWriter, req *http.Request) {
+func helloStreaming(w http.ResponseWriter, req *http.Request) {
 	w.WriteHeader(200)
-	for i := 0; i < 5; i++ {
-		w.Write([]byte("hello¥n"))
+
+	for  {
+		w.Write([]byte("hello\n"))
 		w.(http.Flusher).Flush()
 		time.Sleep(1 * time.Second)
 	}
+
+	fmt.Fprintf(w, "hello end\n")
 }

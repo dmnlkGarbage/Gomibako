@@ -1,18 +1,18 @@
 package main
 
 import (
-	"net/url"
-	"net/http"
-	"fmt"
-	"io/ioutil"
 	"encoding/json"
+	"fmt"
 	"github.com/k0kubun/pp"
+	"io/ioutil"
+	"net/http"
+	"net/url"
 )
-
 
 const (
 	URL = "http://api.atnd.org/events/"
 )
+
 func main() {
 	param := url.Values{}
 	param.Add("keyword", "golang")
@@ -21,21 +21,20 @@ func main() {
 	resp, err := http.Get(URL + "?" + param.Encode())
 	if err != nil {
 		fmt.Println(err)
-		return;
+		return
 	}
 	defer resp.Body.Close()
 	val, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println(err)
-		return;
+		return
 	}
 
 	var result SearchResult
-	if err = json.Unmarshal(val, &result);err != nil {
+	if err = json.Unmarshal(val, &result); err != nil {
 		fmt.Println(err)
 		return
 	}
 	pp.Print(result)
 
 }
-

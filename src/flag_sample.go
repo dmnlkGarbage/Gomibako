@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"flag"
+	"fmt"
 )
 
 // flagパッケージ試す
@@ -28,4 +28,3 @@ func main() {
 	//flag test
 	//a
 }
-

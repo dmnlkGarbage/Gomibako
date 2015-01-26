@@ -5,17 +5,17 @@ import "fmt"
 // sturct
 type UrlParam struct {
 	Keyword string
-	Format string
+	Format  string
 }
 
-func NewParam (keyword string) *UrlParam {
+func NewParam(keyword string) *UrlParam {
 	u := new(UrlParam)
 	u.Format = "json"
 	u.Keyword = keyword
 	return u
 }
 
-func NewParam2 (keyword string) *UrlParam {
+func NewParam2(keyword string) *UrlParam {
 	return &UrlParam{keyword, "json"}
 }
 
@@ -39,5 +39,3 @@ func main() {
 	fmt.Println(p3)
 
 }
-
-

@@ -1,17 +1,24 @@
 package main
 
 import (
-	"net/http"
 	"bufio"
 	"fmt"
+	"log"
+	"net/http"
 )
 
 func main() {
-	resp, _ := http.Get("http://localhost:8000")
-	//defer resp.Body.Close()
-	scan := bufio.NewScanner(resp.Body)
-	for scan.Scan() {
-		fmt.Println(string(scan.Bytes()))
+
+	res, err := http.Get("http://localhost:8000")
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	scanner := bufio.NewScanner(res.Body)
+	for {
+		if ok := scanner.Scan(); !ok {
+			break
+		}
+		fmt.Println(string(scanner.Bytes()))
 	}
 }
-
