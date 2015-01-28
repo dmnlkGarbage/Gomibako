@@ -1,13 +1,12 @@
 package main
 
 import (
-	"net/http"
-	"time"
+	"encoding/json"
 	"fmt"
 	"math/rand"
-	"encoding/json"
+	"net/http"
+	"time"
 )
-
 
 func main() {
 	http.HandleFunc("/", helloStreaming)
@@ -17,7 +16,7 @@ func main() {
 func helloStreaming(w http.ResponseWriter, req *http.Request) {
 	w.WriteHeader(200)
 
-	for  {
+	for {
 		rand.Seed(time.Now().Unix())
 		rand := rand.Intn(2)
 		if rand == 0 {
@@ -42,7 +41,7 @@ func helloStreaming(w http.ResponseWriter, req *http.Request) {
 
 type User struct {
 	Name string
-	Age int64
+	Age  int64
 }
 
 type Event struct {
