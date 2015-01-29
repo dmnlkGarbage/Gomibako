@@ -31,8 +31,9 @@ func helloStreaming(w http.ResponseWriter, req *http.Request) {
 			enc, _ := json.Marshal(e)
 			w.Write(enc)
 		}
-
+		w.Write([]byte("\n"))
 		w.(http.Flusher).Flush()
+
 		time.Sleep(1 * time.Second)
 	}
 
