@@ -20,8 +20,14 @@ func main() {
 			break
 		}
 
-		//jsonとして受ける
-		
-		fmt.Println(string(scanner.Bytes()))
+		//まずinterfaceでうける
+		//json化
+		var result = interface {}
+		fmt.Println(result)
+		//		if err = json.Unmarshal(scanner.Bytes(), &result); err != nil {
+		//			fmt.Println(err)
+		//			continue
+		//		}
+
 	}
 }
