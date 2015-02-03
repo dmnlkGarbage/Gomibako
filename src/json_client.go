@@ -19,6 +19,9 @@ func main() {
 		if ok := scanner.Scan(); !ok {
 			break
 		}
+
+		//jsonとして受ける
+		
 		fmt.Println(string(scanner.Bytes()))
 	}
 }
