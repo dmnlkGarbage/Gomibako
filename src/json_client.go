@@ -31,14 +31,14 @@ func main() {
 			continue
 		}
 		msg := result.(map[string]interface{})
-		if _, ok := msg["Title"]; ok {
+		if _, ok := msg["Name"]; ok {
 			u := new(User)
 			if err = json.Unmarshal(scanner.Bytes(), &u); err != nil {
 				break
 			}
 			pp.Print(u)
 		}
-		if _, ok := msg["Name"]; ok  {
+		if _, ok := msg["Title"]; ok  {
 			e := new(Event)
 			if err = json.Unmarshal(scanner.Bytes(), &e); err != nil {
 				break
