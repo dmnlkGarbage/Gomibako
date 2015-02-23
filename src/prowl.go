@@ -24,6 +24,10 @@ func main() {
 		Providerkey : "",
 		Url: "www.foobar.com",
 	}
-	p.Push(n)
+	err = p.Push(n)
+
+	if err != nil {
+		fmt.Println("Unable to send Prowl notification! - " + err.Error())
+	}
 }
 
