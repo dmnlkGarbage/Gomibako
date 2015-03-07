@@ -5,7 +5,6 @@ import (
 	"os"
 
 	"github.com/rem7/goprowl"
-	"strconv"
 )
 
 func main() {
@@ -27,9 +26,8 @@ func main() {
 	}
 
 	c := make(chan int)
-	for i := 1; i < 5; i++ {
-		fmt.Println(i)
-		n.Description = "test" + strconv.Itoa(i)
+	for i := 1; i < 2; i++ {
+		n.Description = "\U0001f34e"
 		go func() {
 			err = p.Push(n)
 			c <- 1
