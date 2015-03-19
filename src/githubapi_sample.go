@@ -2,13 +2,15 @@ package main
 
 import (
 	"github.com/google/go-github/github"
-	"net/http"
+	"github.com/k0kubun/pp"
 )
 
 func main() {
-	c := github.NewClient(http.Client{})
-	if c == nil {
-		return;
+	client := github.NewClient(nil)
+	opt := &github.RepositoryListByOrgOptions{}
+	repos, _, err := client.Repositories.ListByOrg("github", opt)
+	if err != nil {
+		return
 	}
+	pp.Print(repos)
 }
-
