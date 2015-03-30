@@ -7,7 +7,7 @@ import (
 
 func main() {
 	client := github.NewClient(nil)
-	opt := &github.RepositoryListByOrgOptions{}
+	opt := &github.RepositoryListByOrgOptions{Type: "owner"}
 	repos, _, err := client.Repositories.ListByOrg("github", opt)
 	if err != nil {
 		return
