@@ -16,6 +16,12 @@ func main() {
 	myApp.changeAppIdPointer(15)
 	fmt.Println(myApp.appId)
 
+	var ap *App  = &App{}
+	fmt.Println(ap)
+	ap.appId  = 2
+	fmt.Println(ap)
+
+
 }
 
 // scan.goに定義されてるAppっていう構造体にメソッドを生やす。
